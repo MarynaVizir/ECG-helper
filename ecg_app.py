@@ -80,7 +80,7 @@ class Lead:
 					cv2.namedWindow(f"{self.name} lead (press 'Enter' to continue)")
 					cv2.moveWindow(f"{self.name} lead (press 'Enter' to continue)", self.x_start//2, self.y_start//2)
 					cv2.imshow(f"{self.name} lead (press 'Enter' to continue)", roi)
-					cv2.imwrite(f"{self.name}.png", roi)
+					cv2.imwrite(f"temp_pics/{self.name}.png", roi)
 		cv2.namedWindow(f"Select region of {self.name} lead upper-left point >> lower-right point")
 		cv2.setMouseCallback(f"Select region of {self.name} lead upper-left point >> lower-right point", mouse_crop)
 		
@@ -347,7 +347,7 @@ class Processing:
 		Lead(l, ecg_file)
 	cv2.destroyAllWindows()
 	
-	all_pics = [f'{l}.png' for l in lead_names]
+	all_pics = [f'temp_pics/{l}.png' for l in lead_names]
 	st_elevation = []
 	
 	def justwait(self):
@@ -375,18 +375,18 @@ class Processing:
 			re = RealLead(p)
 			#re.image.show()
 			c1 = Cycle(p)
-			print(f'\nFor lead {p.split(".")[0]}:')
+			print(f'\nFor lead {p.split("/")[1].split(".")[0]}:')
 			print('wave R - ', c1.r)
 			print('point J - ', c1.j)
 			print('isoline - ', c1.local_iso)
 			print('level st - ', c1.st)
 			
-			if p == 'V2.png' or p == 'V3.png':
+			if p.split("/")[1] == 'V2.png' or p.split("/")[1] == 'V3.png':
 				if c1.st > 12:
-					Processing.st_elevation.append(p.split('.')[0])
+					Processing.st_elevation.append(p.split("/")[1].split('.')[0])
 			else:
 				if c1.st > 6:
-					Processing.st_elevation.append(p.split('.')[0])
+					Processing.st_elevation.append(p.split("/")[1].split('.')[0])
 			ECGline.ecg_coord.clear()
 			root.after(1, lambda: iter_progress(progress-1))
 			
