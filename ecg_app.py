@@ -32,7 +32,7 @@ class Greeting:
 			'''Determines the function of open-button: open a file chooser dialog and allow the user to select an image'''
 			global filepath
 			filetypes = (('image files', '.png'), ('image files', '.jpg'))
-			filepath = fd.askopenfilename(title='Open a file', initialdir='/Users/marinavizir/Documents/6 курс (англ)/ЭКГ/', filetypes=filetypes)
+			filepath = fd.askopenfilename(title='Open a file', initialdir='/', filetypes=filetypes)
 			
 			if len(filepath) > 0:
 				'''ensure a file path was selected'''
